@@ -70,8 +70,65 @@ end
 ```
 
 К сожалению, каждый `.md` файл будет прорисован два раза: в первый раз для создания
-содержания, второй раз уже будет построено само содержание.
+содержания, второй раз уже будет построено само содержимое.
 
 #### Последние штрихи
 
-Осталось только добавить стили
+Осталось только добавить стили. Попробуем стилизовать markdown под гитхаб. 
+
+Во-первых, нам понадобятся стили для подсветки `markdown`: 
+[github-markdown.css](https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css)
+(возьмем из репозитория [sindresorhus](https://github.com/sindresorhus/github-markdown-css)). Сохраним файл в 
+`app/assets/stylesheets/github-markdown.css`
+
+Во-вторых, скачаем подсветку синтаксиса [pygments.css](/public/2015-10-27-render-markdown-in-rails/pygments.css),
+которая более-менее похожа на подсветку от Github. Положим файл в `app/assets/stylesheets/pygments.css`
+
+В-третьих, стилизуем нашу страницу, добавив границы и центрировав ее.
+
+Вот так должен выглядеть `app/assets/stylesheets/application.css` файл:
+
+```css
+#= require pygments
+#= require github-markdown
+
+.markdown-body {
+  min-width: 200px;
+  max-width: 790px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+```
+
+#### Подготовка 
+
+```ruby
+config/routes.rb
+
+Rails.application.routes.draw do
+  root to: "application#index"
+end
+```
+
+`app/views/application/index.html.erb`
+
+```erb
+<article class="markdown-body">
+  <%= render partial: 'markdown_partial' %>
+</article>
+```
+
+`app/views/application/_markdown_partial.md`
+
+    __Hello world__
+    ```
+    This is a code
+    ```
+
+
+#### Результат:
+
+
