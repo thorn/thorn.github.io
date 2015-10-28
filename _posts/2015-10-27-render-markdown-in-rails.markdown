@@ -5,13 +5,13 @@ date:   2015-10-27 22:12:11
 categories: rails markdown redcarpet
 ---
 
-Однажды мне понадобилось отрисовывать шаблоны формата `.md` в рельсовом приложении.
-Требовалось сделать так, чтобы можно было написать `render 'partial_with_markdown'`
-и все сразу работало (автовставка содержания, поддержка [GFM](https://help.github.com/articles/github-flavored-markdown/)
-и подсветка кода).
+Однажды мне понадобилось отрисовывать шаблоны формата `.md` в рельсовом приложении. Требовалось сделать так, чтобы можно было написать `render 'partial_with_markdown'` и все сразу работало (автовставка содержания, поддержка [GFM](https://help.github.com/articles/github-flavored-markdown/) и подсветка кода).
 
-В статье пошагово будет построено Rails приложение, которое отрисовывать подобные
-шаблоны.
+В статье пошагово будет построено Rails приложение, которое будет отрисовывать подобные шаблоны.
+
+[Репозиторий](https://github.com/thorn/markdown_example) на Github.
+
+![Конечный результат](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Markdown шаблон с содержанием и кодом")
 
 #### Создаем новое приложение
 
@@ -40,6 +40,8 @@ gem 'pygments.rb'
 [pygments.rb](https://github.com/tmm1/pygments.rb) понадобится для подсветки кода.
 Этот гем требует наличия в системе версии Python 2.x (Python 2.5, Python 2.6 или 
 Python 2.7)
+
+Не забываем выполнить команду `bundle` в папке с проектом.
 
 #### Создадим новый initializer
 
@@ -89,8 +91,8 @@ end
 Вот так должен выглядеть `app/assets/stylesheets/application.css` файл:
 
 ```css
-#= require pygments
-#= require github-markdown
+*= require pygments
+*= require github-markdown
 
 .markdown-body {
   min-width: 200px;
@@ -124,6 +126,7 @@ end
 `app/views/application/_markdown_partial.md`
 
     __Hello world__
+    
     ```
     This is a code
     ```
