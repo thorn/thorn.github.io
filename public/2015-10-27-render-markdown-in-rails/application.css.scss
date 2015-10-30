@@ -1,0 +1,12 @@
+@import 'markdown';
+@import 'pygments';
+
+.markdown-body {
+  min-width: 200px;
+  max-width: 790px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}

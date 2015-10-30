@@ -1,17 +1,25 @@
 ---
 layout: post
-title:  "Отрисовка markdown в Rails"
+title:  "Markdown в Rails"
 date:   2015-10-27 22:12:11
 categories: rails markdown redcarpet
 ---
 
-Однажды мне понадобилось отрисовывать шаблоны формата `.md` в рельсовом приложении. Требовалось сделать так, чтобы можно было написать `render 'partial_with_markdown'` и все сразу работало (автовставка содержания, поддержка [GFM](https://help.github.com/articles/github-flavored-markdown/) и подсветка кода).
+Хотите отображать **markdown** в рельсовом проекте, как на странице Github?
 
-В статье пошагово будет построено Rails приложение, которое будет отрисовывать подобные шаблоны.
+В статье будет пошагово построено Rails приложение, которое будет отрисовывать шаблоны в markdown с помощью простого `render 'readme'`.
+
+Конечный результат:
+
+![Конечный результат](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Markdown шаблон с содержанием и кодом")
 
 [Репозиторий](https://github.com/thorn/markdown_example) на Github.
 
-![Конечный результат](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Markdown шаблон с содержанием и кодом")
+Фичи приложения:
+
+- Поддержка [Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/)
+- Подсветка кода с помощью `Pygments`
+- Автоматическая вставка сожержания
 
 #### Создаем новое приложение
 
@@ -34,16 +42,16 @@ gem 'pygments.rb'
 Гемом [redcarpet](https://github.com/vmg/redcarpet) мы заменим парсер по умолчанию у 
 `markdown-rails`, который называется [RDiscount](https://github.com/rtomayko/rdiscount).
 Преимуществом `redcarpet` является поддержка
-[Github Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/)
+[GFM](https://help.github.com/articles/github-flavored-markdown/)
 и относительная легкость автоматического создания содержания.
 
 [pygments.rb](https://github.com/tmm1/pygments.rb) понадобится для подсветки кода.
 Этот гем требует наличия в системе версии Python 2.x (Python 2.5, Python 2.6 или 
 Python 2.7)
 
-Не забываем выполнить команду `bundle` в папке с проектом.
+Не забываем выполнить команду `bundle` в папке с проектом!
 
-#### Создадим новый initializer
+#### Создаем новый initializer
 
 ```ruby
 # config/initializers/markdown.rb
@@ -71,12 +79,11 @@ MarkdownRails.configure do |config|
 end
 ```
 
-К сожалению, каждый `.md` файл будет прорисован два раза: в первый раз для создания
-содержания, второй раз уже будет построено само содержимое.
+К сожалению, каждый `.md` файл будет прорисован два раза: в первый раз для создания содержания, второй раз уже будет скомпилирован сам документ.
 
 #### Последние штрихи
 
-Осталось только добавить стили. Попробуем стилизовать markdown под гитхаб. 
+Осталось только добавить стили. Попробуем стилизовать markdown под гитхаб.
 
 Во-первых, нам понадобятся стили для подсветки `markdown`: 
 [github-markdown.css](https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css)
@@ -87,6 +94,18 @@ end
 которая более-менее похожа на подсветку от Github. Положим файл в `app/assets/stylesheets/pygments.css`
 
 В-третьих, стилизуем нашу страницу, добавив границы и центрировав ее.
+
+```css
+.markdown-body {
+  min-width: 200px;
+  max-width: 790px;
+  margin: 0 auto;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+```
 
 Вот так должен выглядеть `app/assets/stylesheets/application.css` файл:
 
@@ -105,33 +124,121 @@ end
 }
 ```
 
-#### Подготовка 
+#### Собственно приложение
+
+Создадим простейший маршрут в `config/routes.rb`
 
 ```ruby
-config/routes.rb
+# config/routes.rb
 
 Rails.application.routes.draw do
   root to: "application#index"
 end
 ```
 
-`app/views/application/index.html.erb`
+
+В соответствующем виде `app/views/application/index.html.erb` добавим обертку `.markdown-body` и вызовем рендер нашего шаблона
 
 ```erb
 <article class="markdown-body">
-  <%= render partial: 'markdown_partial' %>
+  <%= render partial: 'documentation' %>
 </article>
 ```
 
-`app/views/application/_markdown_partial.md`
+Собственно шаблон с документацией 
 
-    __Hello world__
-    
+`app/views/application/_documentation.md`
+
+    # Документация по API
+
+    > Составитель: [Me](mailto:me@example.com)
+
+    Документ описывает API моего мега полезного сервиса
+
+    # Пользователи
+
+    ## Получение списка пользователей
+
+    __URL:__ (GET)
+
     ```
-    This is a code
+    /users
     ```
 
+    __Параметры:__
+
+    ```
+    Нет
+    ```
+
+    *Удачный ответ:*
+
+    ```
+    HTTP 200 Ok
+    [
+      {
+        "email": "ivan@example.com",
+        "first_name": "Ivan",
+        "last_name": "Ivanov"
+      },
+      ...
+    ]
+    ```
+
+    *Неудачный ответ:*
+
+    ```
+    HTTP 404 Not Found
+    ```
+
+    ## Получение подробной информации о пользователе
+
+    __URL:__ (GET)
+
+    ```
+    /users/:id
+    ```
+
+    ```
+    :id - ID пользователя
+    ```
+
+    __Параметры:__
+
+    ```
+    Нет
+    ```
+
+    *Удачный ответ:*
+
+    ```
+    HTTP 200 Ok
+    {
+      "email": "ivan@example.com",
+      "first_name": "Ivan",
+      "last_name": "Ivanov"
+    }
+    ```
+
+    *Неудачный ответ:*
+
+    ```
+    HTTP 404 Not Found
+    ```
 
 #### Результат:
 
+Запустим сервер с помощью `rails s` и перейдем по адресу [http://localhost:3000](http://localhost:3000), чтобы посмотреть на нашу красивую документацию:
 
+
+![Конечный результат](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Markdown шаблон с содержанием и кодом")
+
+
+### Заключение
+
+В результате у нас получилось приложение, которым удобно прорисовывать статическе шаблоны в формата `.md`.
+
+### Дополнительные ссылки
+
+- [Markdown и подсветка синтаксиса в Ruby On Rails](http://www.unix-lab.org/posts/rails-markdown/) - в статье описан похожий способ рендеринга markdown из базы
+- [Kramdown](http://kramdown.gettalong.org/converter/html.html#toc) - аналог redcarpet, в нем есть тег для автоматической вставки содержания, но также присутствуют некоторые проблемы с использованием сторонних подсветок кода
