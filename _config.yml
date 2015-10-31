@@ -1,0 +1,13 @@
+# Site settings
+title: My Ruby Notes
+email: arsen.shamhalov@live.com
+description: > # this means to ignore newlines until "baseurl:"
+  This blog conatins hightlights of my interaction with an awesome Ruby
+  language.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://thorn.github.io" # the base hostname & protocol for your site
+twitter_username: ArsenShamkhalov
+github_username:  thorn
+
+# Build settings
+markdown: redcarpet
