@@ -11,9 +11,9 @@ categories: rails markdown redcarpet
 
 Конечный результат:
 
-![Конечный результат](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Markdown шаблон с содержанием и кодом")
+![Конечный результат](/public/2015-10-27-render-markdown-in-rails/recorded.gif "Markdown шаблон с содержанием и кодом")
 
-[Репозиторий](https://github.com/thorn/markdown_example) на Github.
+[Репозиторий](https://github.com/thorn/markdown_renderer_example) на Github.
 
 Фичи приложения:
 
@@ -83,11 +83,10 @@ end
 
 #### Последние штрихи
 
-Осталось только добавить стили. Попробуем стилизовать markdown под гитхаб.
+Осталось только добавить стили. Попробуем стилизовать страницу под гитхаб.
 
 Во-первых, нам понадобятся стили для подсветки `markdown`: 
-[github-markdown.css](https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css)
-(возьмем из репозитория [sindresorhus](https://github.com/sindresorhus/github-markdown-css)). Сохраним файл в 
+[github-markdown.css](https://github.com/sindresorhus/github-markdown-css/blob/gh-pages/github-markdown.css) (возьмем из репозитория [sindresorhus](https://github.com/sindresorhus/github-markdown-css)). Сохраним файл в 
 `app/assets/stylesheets/github-markdown.css`
 
 Во-вторых, скачаем подсветку синтаксиса [pygments.css](/public/2015-10-27-render-markdown-in-rails/pygments.css),
@@ -110,9 +109,10 @@ end
 Вот так должен выглядеть `app/assets/stylesheets/application.css` файл:
 
 ```css
+/*
 *= require pygments
 *= require github-markdown
-
+*/
 .markdown-body {
   min-width: 200px;
   max-width: 790px;
@@ -231,7 +231,7 @@ end
 Запустим сервер с помощью `rails s` и перейдем по адресу [http://localhost:3000](http://localhost:3000), чтобы посмотреть на нашу красивую документацию:
 
 
-![Конечный результат](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Markdown шаблон с содержанием и кодом")
+![Конечный результат](/public/2015-10-27-render-markdown-in-rails/result.png "Markdown шаблон с содержанием и кодом")
 
 
 ### Заключение
