@@ -11,13 +11,13 @@ categories: ruby 2.3.0
 
 С помощью [rvm](https://rvm.io):
 
-```shell
+```sh
 $ rvm install 2.3.0-preview1
 ```
 
 C помощью [rbenv](https://github.com/sstephenson/rbenv):
 
-```shell
+```sh
 $ rbenv install 2.3.0-preview1
 ```
 
