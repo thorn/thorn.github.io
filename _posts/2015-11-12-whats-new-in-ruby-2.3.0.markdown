@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Что нового в Ruby 2.3.0-preview1"
-date:   2015-11-02 22:00:00
+date:   2015-11-12 22:00:00
 categories: ruby 2.3.0
 ---
 
