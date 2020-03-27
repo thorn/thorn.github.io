@@ -1,0 +1,159 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	background: #FAFAFA;
+	font-family: 'Helvetica Neue', arial, sans-serif;
+	font-weight: 400;
+	color: #444;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+#app {
+	height: 100%;
+}
+
+$yellow-light: #f9f59e;
+$yellow: #fbda7d;
+$yellow-dark: #f7d75c;
+$orange: #fdb90b;
+$orange-dark: #f2ae00;
+$brown: #dd8a34;
+
+body {
+  background: #f8f8f8;
+  font-family: "Helvetica", "Arial", sans-serif;
+  min-height: 100vh;
+}
+
+.bingo {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 1em;
+  overflow: hidden;
+}
+
+.bingo-title {
+  background: $orange;
+  color: #fff;
+  padding: 30px 10px;
+  grid-column: span 5;
+  text-align: center;
+  font-size: 72px;
+  border-radius: 3px 3px 0 0;
+}
+
+.bingo-help {
+  padding: 15px 10px;
+  border-left: 1px solid $yellow;
+  border-right: 1px solid $yellow;
+  margin: 0;
+}
+
+.bingo-board {
+  background-color: $yellow-dark;
+}
+
+.ultimates-board {
+  background-color: $yellow-dark;
+}
+
+.bingo-board {
+  display: grid;
+  grid-gap: 3px;
+  justify-items: stretch;
+  padding: 10px;
+}
+
+.bingo-card.bingo-card-marked {
+  background: $orange-dark;
+}
+
+.bingo-card {
+  cursor: pointer;
+  background-color: $yellow-light;
+  min-height: 120px;
+  padding: 5px;
+}
+
+.bingo-card.ultimate {
+  background-color: $brown;
+}
+
+.bingo-card.ultimate.bingo-card-marked {
+  background: $orange-dark;
+}
+.ultimates-board {
+  display: grid;
+  grid-gap: 3px;
+  justify-items: stretch;
+  padding: 10px;
+}
+.ultimates-board {
+  border-radius: 0 0 3px 3px;
+}
+
+.reset {
+  margin: 0;
+  font: 700 16px 'Nunito', sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+  border: 2px dotted;
+  color: $orange;
+  padding: 8px 10px;
+  &:hover {
+    color: $orange-dark;
+  }
+}
+footer {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.you-won{
+  text-align: center;
+}
+
+.you-won-image {
+  width: 480px;
+}
+
+button {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+
+  background: transparent;
+
+  /* inherit font & color from ancestor */
+  color: inherit;
+  font: inherit;
+
+  /* Normalize `line-height`. Cannot be changed from `normal` in Firefox 4+. */
+  line-height: normal;
+
+  /* Corrects font smoothing for webkit */
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+
+  /* Corrects inability to style clickable `input` types in iOS */
+  -webkit-appearance: none;
+  border-radius: 0;
+  /* Remove excess padding and border in Firefox 4+ */
+  &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+  }
+  &:focus {
+  	outline: none;
+  }
+}
