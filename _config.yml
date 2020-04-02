@@ -11,4 +11,4 @@ github_username:  thorn
 url: http://blog.asham.me
 
 # Build settings
-markdown: redcarpet
+markdown: GFM
